@@ -1,4 +1,4 @@
-import { Universe, Cell } from "game-of-life";
+import { Universe } from "game-of-life";
 import { memory } from "game-of-life/game_of_life_bg";
 
 
@@ -7,11 +7,11 @@ const GRID_COLOR = "#CCCCCC";
 const DEAD_COLOR = "#FFFFFF";
 const ALIVE_COLOR = "#000000";
 
-const UNIVERSE_WIDTH = 600;
-const UNIVERSE_HEIGHT = 400
+const UNIVERSE_WIDTH = 500;
+const UNIVERSE_HEIGHT = 250
 
 // Construct the universe, and get its width and height.
-const universe = Universe.new(UNIVERSE_WIDTH, UNIVERSE_HEIGHT, 0.7);
+const universe = Universe.new(UNIVERSE_WIDTH, UNIVERSE_HEIGHT, 0.45);
 const width = UNIVERSE_WIDTH //universe.width();
 const height = UNIVERSE_HEIGHT//universe.height();
 
@@ -57,7 +57,12 @@ function drawGrid () {
 
 function drawCells () {
     const cellsPtr = universe.cells();
-    const cells = new Uint8Array(memory.buffer, cellsPtr, width * height);
+    const cells = new Uint8Array(memory.buffer, cellsPtr, width * height / 8);
+    const bitIsSet = (n, arr) => {
+        const byte = Math.floor(n / 8);
+        const mask = 1 << (n % 8);
+        return (arr[byte] & mask) === mask;
+    };
 
     ctx.beginPath();
 
@@ -65,9 +70,10 @@ function drawCells () {
         for (let col = 0; col < width; col++) {
             const idx = getIndex(row, col);
 
-            ctx.fillStyle = cells[idx] === Cell.Dead
-                ? DEAD_COLOR
-                : ALIVE_COLOR;
+            // This is updated!
+            ctx.fillStyle = bitIsSet(idx, cells)
+                ? ALIVE_COLOR
+                : DEAD_COLOR;
 
             ctx.fillRect(
                 col * (CELL_SIZE + 1) + 1,
