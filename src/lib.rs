@@ -2,6 +2,7 @@ mod utils;
 
 use std::fmt;
 use wasm_bindgen::prelude::*;
+use js_sys::Math::random;
 
 
 fn main() {
@@ -30,7 +31,7 @@ fn main() {
             self.height
         }
 
-        pub fn cells(&self) -> *const Cell {
+        pub fn cells(&mut self) -> *const Cell {
             self.cells.as_ptr()
         }
 
@@ -88,13 +89,10 @@ fn main() {
             self.cells = next;
         }
 
-        pub fn new() -> Universe {
-            let width = 256;
-            let height = 256;
-
+        pub fn new(width: u32, height: u32, life_probability: f64) -> Universe {
             let cells = (0..width * height)
                 .map(|i| {
-                    if i % 3 == 0 || i % 29 == 0 || i % 17 == 0 {
+                    if random() >= life_probability {
                         Cell::Alive
                     } else {
                         Cell::Dead

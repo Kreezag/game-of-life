@@ -2,17 +2,18 @@ import { Universe, Cell } from "game-of-life";
 import { memory } from "game-of-life/game_of_life_bg";
 
 
-const CELL_SIZE = 3; // px
+const CELL_SIZE = 2; // px
 const GRID_COLOR = "#CCCCCC";
 const DEAD_COLOR = "#FFFFFF";
 const ALIVE_COLOR = "#000000";
 
-// const pre = document.getElementById("game-of-life-canvas");
+const UNIVERSE_WIDTH = 600;
+const UNIVERSE_HEIGHT = 400
 
 // Construct the universe, and get its width and height.
-const universe = Universe.new();
-const width = universe.width();
-const height = universe.height();
+const universe = Universe.new(UNIVERSE_WIDTH, UNIVERSE_HEIGHT, 0.7);
+const width = UNIVERSE_WIDTH //universe.width();
+const height = UNIVERSE_HEIGHT//universe.height();
 
 // Give the canvas room for all of our cells and a 1px border
 // around each of them.
@@ -30,7 +31,6 @@ const renderLoop = () => {
 
     requestAnimationFrame(renderLoop);
 };
-
 
 requestAnimationFrame(renderLoop);
 
