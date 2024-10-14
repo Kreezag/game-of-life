@@ -1,20 +1,20 @@
 mod utils;
 
-use std::fmt;
 use wasm_bindgen::prelude::*;
+
 use js_sys::Math::random;
 extern crate fixedbitset;
 use fixedbitset::FixedBitSet;
 
 
-fn main() {
-    #[wasm_bindgen]
-    pub struct Universe {
-        width: u32,
-        height: u32,
-        cells: FixedBitSet,
-    }
+#[wasm_bindgen]
+pub struct Universe {
+    width: u32,
+    height: u32,
+    cells: FixedBitSet,
+}
 
+fn main() {
     #[wasm_bindgen]
     impl Universe {
         pub fn width(&self) -> u32 {
@@ -87,22 +87,15 @@ fn main() {
                 cells,
             }
         }
-
-        pub fn render(&self) -> String {
-            self.to_string()
-        }
     }
 
-    impl fmt::Display for Universe {
-        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-            for x in 0..self.cells.len() {
-                write!(f, "{}", if self.cells[x] == false { '◻' } else { '◼' })?;
-                if (x % self.width as usize == 0) {
-                    write!(f, "\n")?;
-                }
-            }
-
-            Ok(())
+    impl Universe {
+        pub fn set_cells(&mut self, input: FixedBitSet) {
+            self.cells = input
+        }
+        pub fn get_cells(self) -> FixedBitSet {
+            self.cells
         }
     }
 }
+
