@@ -3,15 +3,15 @@ import { memory } from "game-of-life/game_of_life_bg";
 
 
 const CELL_SIZE = 2; // px
-const GRID_COLOR = "#CCCCCC";
+const GRID_COLOR = "#EEE";
 const DEAD_COLOR = "#FFFFFF";
-const ALIVE_COLOR = "#000000";
+const ALIVE_COLOR = "#2511e0";
 
 const UNIVERSE_WIDTH = 500;
 const UNIVERSE_HEIGHT = 250
 
 // Construct the universe, and get its width and height.
-const universe = Universe.new(UNIVERSE_WIDTH, UNIVERSE_HEIGHT, 0.45);
+const universe = Universe.new(UNIVERSE_WIDTH, UNIVERSE_HEIGHT, 0.97);
 const width = UNIVERSE_WIDTH //universe.width();
 const height = UNIVERSE_HEIGHT//universe.height();
 
